@@ -1,12 +1,13 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "./database.js";
+import { rol } from "./rol.model.js";
 
 export const usuario = sequelize.define("usuario", {
   nombre: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  correo:{
+  correo: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -14,20 +15,20 @@ export const usuario = sequelize.define("usuario", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  idrol:{
+  idrol: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
   foto: {
     type: DataTypes.STRING,
     allowNull: false,
-  }
+  },
 });
-usuario.associate = (models) => {
-  usuario.belongsTo(models.rol, {
-    foreignKey: {
-      allowNull: false,
-    },
-  });
-  return usuario;
-};
+
+rol.hasOne(usuario, {});
+usuario.belongsTo(rol, {
+  foreignKey: {
+    allowNull: false,
+  },
+});
+
